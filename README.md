@@ -1,0 +1,1 @@
+# django-CRUD-app-k8s
