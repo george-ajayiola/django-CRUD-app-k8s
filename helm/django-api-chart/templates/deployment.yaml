@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: djangoapp-deployment
+  labels:
+    app: django
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: django
+  template:
+    metadata:
+      labels:
+        app: django
+    spec:
+      containers:
+      - name: django
+        image: myfirstlab.azurecr.io/djangoapi:{{ .Values.image.tag }}
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "256Mi" 
+            cpu: "500m"     
+          limits:
+            memory: "512Mi" 
+            cpu: "1"        
