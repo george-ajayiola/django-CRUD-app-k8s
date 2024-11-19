@@ -45,7 +45,7 @@ spec:
               key: aws_region
         volumeMounts:
         - name: secrets-store
-          mountPath: "/mnt/secrets"
+          mountPath: "/mnt/secrets-store"
           readOnly: true
       volumes:
       - name: secrets-store
