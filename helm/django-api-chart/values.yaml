@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: myfirstlab.azurecr.io/djangoapi
   pullPolicy: IfNotPresent
-  tag: "v1.0.3"
+  tag: "v1.0.5"
 
 
 
