@@ -1,1 +1,1 @@
-# django-CRUD-app-k8s
+# django-REST-api-k8s
