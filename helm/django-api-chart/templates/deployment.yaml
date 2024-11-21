@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: django-rest-api-deployment
-  namespace: drinks-api
   labels:
     app: django
 spec:
@@ -15,40 +14,34 @@ spec:
       labels:
         app: django
     spec:
+      serviceAccountName: "workload-identity-sa"
       containers:
       - name: django
         image: myfirstlab.azurecr.io/djangoapi:{{ .Values.image.tag }}
         ports:
         - containerPort: 8000
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "500m"
-          limits:
-            memory: "512Mi"
-            cpu: "1"
+        volumeMounts:
+        - name: secrets-store01-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
         env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: aws-secret
+              name: awssecret
               key: aws_access_key_id
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: aws-secret
+              name: awssecret
               key: aws_secret_access_key
         - name: AWS_REGION
           valueFrom:
             secretKeyRef:
-              name: aws-secret
+              name: awssecret
               key: aws_region
-        volumeMounts:
-        - name: secrets-store
-          mountPath: "/mnt/secrets-store"
-          readOnly: true
       volumes:
-      - name: secrets-store
+      - name: secrets-store01-inline
         csi:
           driver: secrets-store.csi.k8s.io
           readOnly: true
