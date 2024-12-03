@@ -40,19 +40,23 @@ spec:
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
-              name: db_name
+              name: db-credentials
+              key: db_name
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: db_password
+              name: db-credentials
+              key: db_password
         - name: DB_PORT
           valueFrom:
             secretKeyRef:
-              name: db_port
+              name: db-credentials
+              key: db_port
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: db_user
+              name: db-credentials
+              key: db_user
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
