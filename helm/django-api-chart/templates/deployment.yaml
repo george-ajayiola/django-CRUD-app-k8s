@@ -20,26 +20,44 @@ spec:
         image: myfirstlab.azurecr.io/djangoapi:{{ .Values.image.tag }}
         ports:
         - containerPort: 8000
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
         volumeMounts:
         - name: secrets-store01-inline
           mountPath: "/mnt/secrets-store"
           readOnly: true
         env:
-        - name: AWS_ACCESS_KEY_ID
+        - name: DB_HOST
           valueFrom:
             secretKeyRef:
-              name: awssecret
-              key: aws_access_key_id
-        - name: AWS_SECRET_ACCESS_KEY
+              name: db-credentials
+              key: db_host
+        - name: DB_NAME
           valueFrom:
             secretKeyRef:
-              name: awssecret
-              key: aws_secret_access_key
-        - name: AWS_REGION
+              name: db_name
+        - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: awssecret
-              key: aws_region
+              name: db_password
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: db_port
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: db_user
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: secret_key
       volumes:
       - name: secrets-store01-inline
         csi:
