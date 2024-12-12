@@ -17,7 +17,7 @@ spec:
       serviceAccountName: "workload-identity-sa"
       containers:
       - name: django
-        image: ajayiacr.azurecr.io/django-backend-api:{{ .Values.image.tag }}
+        image: myfirstlab.azurecr.io/django-backend-api:{{ .Values.image.tag }}
         ports:
         - containerPort: 8000
         resources:
